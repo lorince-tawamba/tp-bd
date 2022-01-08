@@ -3,6 +3,7 @@ package com.iuc.tp.bd;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DataBase {
 
@@ -11,6 +12,7 @@ public class DataBase {
     private String oracleDriverName = "oracle.jdbc.driver.OracleDriver";
     private int choixDriver = 0;
     private Connection connection;
+    private Statement statement;
 
     public DataBase(int choixDriver) {
         super();
@@ -50,5 +52,16 @@ public class DataBase {
         } catch (SQLException exc) {
             exc.printStackTrace();
         }
+    }
+
+    public int ecrire(String query) {
+        int nbre = 0;
+        try {
+            statement = connection.createStatement();
+            nbre = statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nbre;
     }
 }
